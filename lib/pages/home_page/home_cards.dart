@@ -38,7 +38,7 @@ class HomeCards extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Container(
-                    color: topColor ?? active,
+                    color: topColor,
                     height: 5,
                   ))
                 ],

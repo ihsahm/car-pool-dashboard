@@ -42,7 +42,7 @@ class Responsive extends StatelessWidget {
         } else if (width < largeScreenSize && width >= mediumScreenSize) {
           return mediumScreen ?? largeScreen;
         } else {
-          return smallScreen ?? largeScreen;
+          return smallScreen;
         }
       },
     );
