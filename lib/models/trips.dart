@@ -23,4 +23,19 @@ class Trip {
       required this.dropOffDistance,
       required this.destinationLocation,
       required this.pickUpLocation});
+  factory Trip.fromJson(Map<String, dynamic> json) {
+    return Trip(
+      destinationLocation: json['destinationLocation'],
+      pickUpLocation: json['pickUpLocation'],
+      pickUpLongPos: json['pickUpLongPos'],
+      pickUpDistance: json['pickUpDistance'],
+      pickUpLatPos: json['pickUpLatPos'],
+      driverID: json['driverID'],
+      tripID: json['tripID'],
+      dropOffDistance: json['dropOffDistance'],
+      dropOffLatPos: json['dropOffLatPos'],
+      dropOffLongPos: json['dropOffLongPos'],
+      passengers: json['passengers'],
+    );
+  }
 }
