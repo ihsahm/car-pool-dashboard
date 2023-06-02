@@ -32,11 +32,11 @@ class Driver {
       email: json['email'],
       phone: json['phone'],
       ratings: json['ratings'],
-      carMake: json['carMake'],
-      carColor: json['carColor'],
-      carModel: json['carModel'],
-      carPlateNo: json['carPlateNo'],
-      carYear: json['carYear'],
+      carMake: json['car_make'],
+      carColor: json['car_color'],
+      carModel: json['car_model'],
+      carPlateNo: json['car_plateNo'],
+      carYear: json['car_year'],
       id: json['id'],
     );
   }

@@ -73,13 +73,17 @@ class _DriversPageState extends State<DriversPage> {
                                             CircleAvatar(
                                               backgroundImage: NetworkImage(
                                                   driversList.imagePath),
-                                              radius: 50,
+                                              radius: 60,
                                             ),
-                                            Text(
-                                                "Driver Name: ${driversList.name}"),
+                                            const SizedBox(height: 15),
+                                            Text("Name: ${driversList.name}"),
+                                            const SizedBox(height: 5),
+                                            Text("Phone: ${driversList.phone}"),
+                                            const SizedBox(height: 5),
+                                            Text("Email: ${driversList.email}"),
                                             const SizedBox(height: 5),
                                             Text(
-                                                "Phone Number: ${driversList.phone}"),
+                                                "Car: ${driversList.carYear} ${driversList.carColor} ${driversList.carMake} ${driversList.carModel}"),
                                             const SizedBox(height: 5),
                                             IconButton(
                                                 onPressed: () {
@@ -161,11 +165,11 @@ class FirebaseRealtimeDatabaseService {
             email: value['email'],
             phone: value['phone'],
             ratings: value['ratings'],
-            carMake: value['carMake'],
-            carColor: value['carColor'],
-            carModel: value['carModel'],
-            carPlateNo: value['carPlateNo'],
-            carYear: value['carYear'],
+            carMake: value['car_make'],
+            carColor: value['car_color'],
+            carModel: value['car_model'],
+            carPlateNo: value['car_plateNo'],
+            carYear: value['car_year'],
             id: value['id'],
           );
           drivers.add(driver);

@@ -73,9 +73,9 @@ class _UsersPageState extends State<UsersPage> {
                                           CircleAvatar(
                                             backgroundImage: NetworkImage(
                                                 usersList.imagePath),
-                                            radius: 50,
+                                            radius: 60,
                                           ),
-                                          const SizedBox(height: 5),
+                                          const SizedBox(height: 15),
                                           Text("Name: ${usersList.name}"),
                                           const SizedBox(height: 5),
                                           Text("Email: ${usersList.email}"),
