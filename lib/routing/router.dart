@@ -14,7 +14,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case UsersPageRoute:
       return _getPageRoute(const UsersPage());
     case TripsPageRoute:
-      return _getPageRoute(TripsPage());
+      return _getPageRoute(const TripsPage());
     default:
       return _getPageRoute(const HomePage());
   }

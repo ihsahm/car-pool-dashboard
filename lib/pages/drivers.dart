@@ -54,56 +54,86 @@ class _DriversPageState extends State<DriversPage> {
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Center(child: Text('No users found'));
                       } else {
-                        return ListView.builder(
+                        return GridView.builder(
                             shrinkWrap: true,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 5),
                             scrollDirection: Axis.vertical,
                             itemCount: snapshot.data!.length,
                             itemBuilder: (BuildContext context, int index) {
                               Driver driversList = snapshot.data![index];
-                              return ListTile(
-                                title: Text("Driver Name: ${driversList.name}"),
-                                leading: IconButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: const Text("Delete"),
-                                              content: const Text(
-                                                  "Are you sure you want to delete this driver?"),
-                                              actions: [
-                                                TextButton(
-                                                  child: const Text("Yes"),
-                                                  onPressed: () {
-                                                    deleteDriver(
-                                                        driversList.id);
-                                                    Navigator.of(context).pop();
+                              return Card(
+                                child: Material(
+                                  child: GridTile(
+                                    footer: Container(
+                                        color: Colors.white,
+                                        child: Column(
+                                          children: [
+                                            CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                  driversList.imagePath),
+                                              radius: 50,
+                                            ),
+                                            Text(
+                                                "Driver Name: ${driversList.name}"),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                                "Phone Number: ${driversList.phone}"),
+                                            const SizedBox(height: 5),
+                                            IconButton(
+                                                onPressed: () {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialog(
+                                                          title: const Text(
+                                                              "Delete"),
+                                                          content: const Text(
+                                                              "Are you sure you want to delete this driver?"),
+                                                          actions: [
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  "Yes"),
+                                                              onPressed: () {
+                                                                deleteDriver(
+                                                                    driversList
+                                                                        .id);
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
 
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            "Driver deleted succesfully, refresh to see changes");
-                                                  },
-                                                ),
-                                                TextButton(
-                                                  child: const Text("No"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          });
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    )),
-                                subtitle: Text("Email: ${driversList.email}"),
-                                trailing:
-                                    Text("Phone Number: ${driversList.phone}"),
-                                onTap: () {
-                                  // Do something when the user tile is tapped
-                                },
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            "Driver deleted succesfully, refresh to see changes");
+                                                              },
+                                                            ),
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  "No"),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      });
+                                                },
+                                                icon: const Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red,
+                                                )),
+                                          ],
+                                        )),
+                                    child: const SizedBox(
+                                      height: 0,
+                                    ),
+                                  ),
+                                ),
                               );
                             });
                       }
@@ -126,7 +156,7 @@ class FirebaseRealtimeDatabaseService {
             dataSnapshot.snapshot.value as Map<dynamic, dynamic>;
         values.forEach((key, value) {
           final driver = Driver(
-            imagePath: value['userImage'],
+            imagePath: value['driver_image'],
             name: value['name'],
             email: value['email'],
             phone: value['phone'],
@@ -142,7 +172,7 @@ class FirebaseRealtimeDatabaseService {
         });
       }
     } catch (exp) {
-      print(exp);
+      Fluttertoast.showToast(msg: "Error: $exp");
     }
 
     return drivers;

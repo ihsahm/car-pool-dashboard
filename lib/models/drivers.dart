@@ -27,7 +27,7 @@ class Driver {
 
   factory Driver.fromJson(Map<String, dynamic> json) {
     return Driver(
-      imagePath: json['userImage'],
+      imagePath: json['driver_image'],
       name: json['name'],
       email: json['email'],
       phone: json['phone'],

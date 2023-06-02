@@ -6,7 +6,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
 import '../constants/controllers.dart';
 
 class UsersPage extends StatefulWidget {
@@ -55,54 +54,85 @@ class _UsersPageState extends State<UsersPage> {
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Center(child: Text('No users found'));
                       } else {
-                        return ListView.builder(
+                        return GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 5),
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount: snapshot.data!.length,
                             itemBuilder: (BuildContext context, int index) {
                               Users usersList = snapshot.data![index];
-                              return ListTile(
-                                title: Text("Name: ${usersList.name}"),
-                                leading: IconButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: const Text("Delete"),
-                                              content: const Text(
-                                                  "Are you sure you want to delete this user?"),
-                                              actions: [
-                                                TextButton(
-                                                  child: const Text("Yes"),
-                                                  onPressed: () {
-                                                    deleteUser(usersList.id);
-                                                    Navigator.of(context).pop();
+                              return Card(
+                                child: Material(
+                                  child: GridTile(
+                                    footer: Container(
+                                      color: Colors.white,
+                                      child: Column(
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                                usersList.imagePath),
+                                            radius: 50,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Text("Name: ${usersList.name}"),
+                                          const SizedBox(height: 5),
+                                          Text("Email: ${usersList.email}"),
+                                          const SizedBox(height: 5),
+                                          Text("Phone: ${usersList.phone}"),
+                                          const SizedBox(height: 5),
+                                          IconButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: const Text(
+                                                            "Delete"),
+                                                        content: const Text(
+                                                            "Are you sure you want to delete this user?"),
+                                                        actions: [
+                                                          TextButton(
+                                                            child: const Text(
+                                                                "Yes"),
+                                                            onPressed: () {
+                                                              deleteUser(
+                                                                  usersList.id);
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
 
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            "User deleted succesfully, refresh to see changes");
-                                                  },
-                                                ),
-                                                TextButton(
-                                                  child: const Text("No"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          });
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    )),
-                                subtitle: Text("Email: ${usersList.email}"),
-                                trailing: Text("Phone: ${usersList.phone}"),
-                                onTap: () {
-                                  // Do something when the user tile is tapped
-                                },
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "User deleted succesfully, refresh to see changes");
+                                                            },
+                                                          ),
+                                                          TextButton(
+                                                            child: const Text(
+                                                                "No"),
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                          ),
+                                                        ],
+                                                      );
+                                                    });
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              )),
+                                        ],
+                                      ),
+                                    ),
+                                    child: const SizedBox(height: 0),
+                                  ),
+                                ),
                               );
                             });
                       }
@@ -134,7 +164,7 @@ class FirebaseRealtimeDatabaseService {
         });
       }
     } catch (exp) {
-      print(exp);
+      Fluttertoast.showToast(msg: "Error: $exp");
     }
 
     return users;

@@ -1,7 +1,6 @@
 import 'package:car_pool_dashboard/constants/controllers.dart';
 import 'package:car_pool_dashboard/main.dart';
 import 'package:car_pool_dashboard/models/trips.dart';
-import 'package:car_pool_dashboard/models/users.dart';
 import 'package:car_pool_dashboard/widgets/custom_text.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ import 'package:get/get.dart';
 import '../helpers/responsive.dart';
 
 class TripsPage extends StatefulWidget {
-  TripsPage({super.key});
+  const TripsPage({super.key});
 
   @override
   State<TripsPage> createState() => _TripsPageState();
@@ -145,7 +144,7 @@ class FirebaseRealtimeDatabaseService {
         });
       }
     } catch (exp) {
-      print(exp);
+      Fluttertoast.showToast(msg: "Error $exp");
     }
 
     return trips;
