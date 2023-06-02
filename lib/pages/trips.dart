@@ -1,18 +1,30 @@
 import 'package:car_pool_dashboard/constants/controllers.dart';
+import 'package:car_pool_dashboard/main.dart';
+import 'package:car_pool_dashboard/models/trips.dart';
+import 'package:car_pool_dashboard/models/users.dart';
 import 'package:car_pool_dashboard/widgets/custom_text.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../helpers/responsive.dart';
 
-class TripsPage extends StatelessWidget {
-  const TripsPage({super.key});
+class TripsPage extends StatefulWidget {
+  TripsPage({super.key});
+
+  @override
+  State<TripsPage> createState() => _TripsPageState();
+}
+
+class _TripsPageState extends State<TripsPage> {
+  final FirebaseRealtimeDatabaseService getAllTrips =
+      FirebaseRealtimeDatabaseService();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Obx(() => Row(
+        Obx(() => Column(
               children: [
                 Container(
                   margin: EdgeInsets.only(
@@ -22,10 +34,106 @@ class TripsPage extends StatelessWidget {
                     size: 24,
                     weight: FontWeight.bold,
                   ),
-                )
+                ),
+                FutureBuilder<List<Trip>>(
+                    future: getAllTrips.getAllTrips(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Trip>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(child: Text('No users found'));
+                      } else {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              Trip tripsList = snapshot.data![index];
+                              return ListTile(
+                                title: Text(
+                                    "Destination: ${tripsList.destinationLocation}"),
+                                leading: IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Delete"),
+                                              content: const Text(
+                                                  "Are you sure you want to delete this trip?"),
+                                              actions: [
+                                                TextButton(
+                                                  child: const Text("No"),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child: const Text("Yes"),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                    )),
+                                subtitle: Text(
+                                    "Pickup location: ${tripsList.pickUpLocation}"),
+                                trailing: Text(
+                                    "Price: ${tripsList.price}br per person"),
+                                onTap: () {
+                                  // Do something when the user tile is tapped
+                                },
+                              );
+                            });
+                      }
+                    })
               ],
             ))
       ],
     );
+  }
+}
+
+class FirebaseRealtimeDatabaseService {
+  final databaseReference = FirebaseDatabase.instance.ref();
+
+  Future<List<Trip>> getAllTrips() async {
+    List<Trip> trips = [];
+    try {
+      DatabaseEvent dataSnapshot = await tripsRef.once();
+
+      if (dataSnapshot.snapshot.value != null) {
+        Map<dynamic, dynamic> values =
+            dataSnapshot.snapshot.value as Map<dynamic, dynamic>;
+        values.forEach((key, value) {
+          final trip = Trip(
+            driverID: value['driver_id'],
+            price: value['price'],
+            pickUpLatPos: value['locationLatitude'],
+            pickUpLongPos: value['locationLongitude'],
+            dropOffLatPos: value['destinationLatitude'],
+            dropOffLongPos: value['destinationLongitude'],
+            tripID: value['tripID'],
+            destinationLocation: value['destinationLocation'],
+            pickUpLocation: value['pickUpLocation'],
+            passengers: value['passengers'],
+          );
+          trips.add(trip);
+        });
+      }
+    } catch (exp) {
+      print(exp);
+    }
+
+    return trips;
   }
 }

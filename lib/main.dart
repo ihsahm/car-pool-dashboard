@@ -2,14 +2,24 @@ import 'package:car_pool_dashboard/constants/colors.dart';
 import 'package:car_pool_dashboard/controllers/menu_controller.dart';
 import 'package:car_pool_dashboard/controllers/navigation_controller.dart';
 import 'package:car_pool_dashboard/layout.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+void main() async {
   Get.put(MenuControllers());
   Get.put(NavigationController());
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyDq7aXHBfaVMBvlwaNZ3h05XvDpHGAKVhg",
+          appId: "1:991467052155:web:4429db6d6983ba0b0a16de",
+          messagingSenderId: "991467052155",
+          databaseURL: "https://ride-pool-6b3b1-default-rtdb.firebaseio.com",
+          authDomain: "ride-pool-6b3b1.firebaseapp.com",
+          storageBucket: "ride-pool-6b3b1.appspot.com",
+          projectId: "ride-pool-6b3b1"));
   runApp(const MyApp());
 }
 

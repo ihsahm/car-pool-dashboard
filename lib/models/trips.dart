@@ -4,11 +4,10 @@ class Trip {
   final String pickUpLongPos;
   final String dropOffLatPos;
   final String dropOffLongPos;
-  final double pickUpDistance;
-  final double dropOffDistance;
   final String destinationLocation;
-  final int passengers;
+  final String passengers;
   final String tripID;
+  final String price;
   final String pickUpLocation;
 
   const Trip(
@@ -19,20 +18,18 @@ class Trip {
       required this.tripID,
       required this.passengers,
       required this.dropOffLongPos,
-      required this.pickUpDistance,
-      required this.dropOffDistance,
       required this.destinationLocation,
-      required this.pickUpLocation});
+      required this.pickUpLocation,
+      required this.price});
   factory Trip.fromJson(Map<String, dynamic> json) {
     return Trip(
+      price: json['price'],
       destinationLocation: json['destinationLocation'],
       pickUpLocation: json['pickUpLocation'],
       pickUpLongPos: json['pickUpLongPos'],
-      pickUpDistance: json['pickUpDistance'],
       pickUpLatPos: json['pickUpLatPos'],
       driverID: json['driverID'],
       tripID: json['tripID'],
-      dropOffDistance: json['dropOffDistance'],
       dropOffLatPos: json['dropOffLatPos'],
       dropOffLongPos: json['dropOffLongPos'],
       passengers: json['passengers'],
