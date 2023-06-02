@@ -41,6 +41,7 @@ dependencies:
   responsive_builder: ^0.7.0
   get: ^4.6.5
   google_fonts: ^4.0.4
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:

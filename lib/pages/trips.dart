@@ -5,6 +5,7 @@ import 'package:car_pool_dashboard/models/users.dart';
 import 'package:car_pool_dashboard/widgets/custom_text.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../helpers/responsive.dart';
@@ -19,6 +20,15 @@ class TripsPage extends StatefulWidget {
 class _TripsPageState extends State<TripsPage> {
   final FirebaseRealtimeDatabaseService getAllTrips =
       FirebaseRealtimeDatabaseService();
+
+  void deleteTrip(String tripId) {
+    DatabaseReference tripRef = tripsRef.child(tripId);
+    try {
+      tripRef.remove();
+    } catch (ex) {
+      Fluttertoast.showToast(msg: "Error +$ex");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,18 +71,24 @@ class _TripsPageState extends State<TripsPage> {
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title: Text("Delete"),
+                                              title: const Text("Delete"),
                                               content: const Text(
                                                   "Are you sure you want to delete this trip?"),
                                               actions: [
                                                 TextButton(
-                                                  child: const Text("No"),
+                                                  child: const Text("Yes"),
                                                   onPressed: () {
+                                                    deleteTrip(
+                                                        tripsList.tripID);
                                                     Navigator.of(context).pop();
+
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "Trip deleted succesfully, refresh to see changes");
                                                   },
                                                 ),
                                                 TextButton(
-                                                  child: const Text("Yes"),
+                                                  child: const Text("No"),
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
                                                   },
@@ -104,8 +120,6 @@ class _TripsPageState extends State<TripsPage> {
 }
 
 class FirebaseRealtimeDatabaseService {
-  final databaseReference = FirebaseDatabase.instance.ref();
-
   Future<List<Trip>> getAllTrips() async {
     List<Trip> trips = [];
     try {

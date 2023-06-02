@@ -1,5 +1,5 @@
 class Driver {
-  final String? id;
+  final String id;
   final String imagePath;
   final String name;
   final String email;
@@ -12,7 +12,7 @@ class Driver {
   final String carPlateNo;
 
   const Driver({
-    this.id,
+    required this.id,
     required this.imagePath,
     required this.name,
     required this.email,
@@ -37,6 +37,7 @@ class Driver {
       carModel: json['carModel'],
       carPlateNo: json['carPlateNo'],
       carYear: json['carYear'],
+      id: json['id'],
     );
   }
 }
