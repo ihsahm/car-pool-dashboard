@@ -23,7 +23,7 @@ class Trip {
       required this.price});
   factory Trip.fromJson(Map<String, dynamic> json) {
     return Trip(
-      price: json['price'],
+      price: json['estimatedCost'],
       destinationLocation: json['destinationLocation'],
       pickUpLocation: json['pickUpLocation'],
       pickUpLongPos: json['pickUpLongPos'],

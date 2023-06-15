@@ -12,7 +12,7 @@ class HomePageCards extends StatelessWidget {
       children: [
         HomeCards(
           title: "Drivers",
-          value: "70",
+          value: "4",
           onTap: () {},
           topColor: Colors.orange,
         ),
@@ -21,7 +21,7 @@ class HomePageCards extends StatelessWidget {
         ),
         HomeCards(
           title: "Users",
-          value: "120",
+          value: "10",
           onTap: () {},
           topColor: Colors.lightGreen,
         ),
@@ -30,7 +30,7 @@ class HomePageCards extends StatelessWidget {
         ),
         HomeCards(
           title: "Trips",
-          value: "850",
+          value: "20",
           onTap: () {},
           topColor: Colors.redAccent,
         ),

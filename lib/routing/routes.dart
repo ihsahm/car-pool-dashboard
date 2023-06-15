@@ -6,9 +6,12 @@ const DriversPageRoute = "Drivers";
 const UsersPageRoute = "Users";
 // ignore: constant_identifier_names
 const TripsPageRoute = "Trips";
+// ignore: constant_identifier_names
+const RequestsPageRoute = "Requests";
 
 List sideMenuItems = [
   HomePageRoute,
+  RequestsPageRoute,
   DriversPageRoute,
   UsersPageRoute,
   TripsPageRoute,

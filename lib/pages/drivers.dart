@@ -164,13 +164,16 @@ class FirebaseRealtimeDatabaseService {
             name: value['name'],
             email: value['email'],
             phone: value['phone'],
-            ratings: value['ratings'],
+            ratings: value['averageRating'],
             carMake: value['car_make'],
             carColor: value['car_color'],
             carModel: value['car_model'],
             carPlateNo: value['car_plateNo'],
             carYear: value['car_year'],
             id: value['id'],
+            driverLicense: value['driver_license'],
+            driverLibre: value['driver_libre'],
+            status: value['status'],
           );
           drivers.add(driver);
         });

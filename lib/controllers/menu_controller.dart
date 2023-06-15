@@ -24,12 +24,15 @@ class MenuControllers extends GetxController {
     switch (itemName) {
       case HomePageRoute:
         return _customIcon(Icons.home, itemName);
+      case RequestsPageRoute:
+        return _customIcon(Icons.group_add_outlined, itemName);
       case DriversPageRoute:
         return _customIcon(Icons.drive_eta_outlined, itemName);
       case UsersPageRoute:
         return _customIcon(Icons.people_alt_outlined, itemName);
       case TripsPageRoute:
         return _customIcon(Icons.arrow_upward_outlined, itemName);
+
       default:
         return _customIcon(Icons.home, itemName);
     }

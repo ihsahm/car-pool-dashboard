@@ -33,34 +33,6 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
           weight: FontWeight.bold,
         )),
         Expanded(child: Container()),
-        IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.settings,
-              color: dark.withOpacity(.7),
-            )),
-        Stack(
-          children: [
-            IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.notifications,
-                  color: dark.withOpacity(.7),
-                )),
-            Positioned(
-                top: 7,
-                right: 7,
-                child: Container(
-                  width: 12,
-                  height: 12,
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: light, width: 2),
-                      color: active),
-                ))
-          ],
-        ),
         Container(
           width: 1,
           height: 22,
@@ -70,7 +42,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
           width: 24,
         ),
         CustomText(
-          text: "Abebe Kelemu",
+          text: "Adminstrator",
           color: lightGrey,
         ),
         const SizedBox(

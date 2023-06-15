@@ -53,7 +53,7 @@ class _TripsPageState extends State<TripsPage> {
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Center(child: Text('No users found'));
+                        return const Center(child: Text('No trips found'));
                       } else {
                         return ListView.builder(
                             shrinkWrap: true,
@@ -102,8 +102,8 @@ class _TripsPageState extends State<TripsPage> {
                                     )),
                                 subtitle: Text(
                                     "Pickup location: ${tripsList.pickUpLocation}"),
-                                trailing: Text(
-                                    "Price: ${tripsList.price}br per person"),
+                                trailing:
+                                    Text("Price: ${tripsList.price}per person"),
                                 onTap: () {
                                   // Do something when the user tile is tapped
                                 },
@@ -130,7 +130,7 @@ class FirebaseRealtimeDatabaseService {
         values.forEach((key, value) {
           final trip = Trip(
             driverID: value['driver_id'],
-            price: value['price'],
+            price: value['estimatedCost'],
             pickUpLatPos: value['locationLatitude'],
             pickUpLongPos: value['locationLongitude'],
             dropOffLatPos: value['destinationLatitude'],
