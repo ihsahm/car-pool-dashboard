@@ -159,8 +159,10 @@ class _RequestsPageState extends State<RequestsPage> {
                                                   "Email: ${driversList.email}"),
                                               const SizedBox(height: 5),
                                               Text(
-                                                  "Car: ${driversList.carYear} ${driversList.carColor} ${driversList.carMake} ${driversList.carModel}"),
+                                                  "Car: ${driversList.carColor} ${driversList.carMake} ${driversList.carModel}"),
                                               const SizedBox(height: 5),
+                                              Text(
+                                                  "Status: ${driversList.status}")
                                             ],
                                           )),
                                       child: const SizedBox(
