@@ -70,8 +70,10 @@ class _RequestsPageState extends State<RequestsPage> {
                                                       .child(snapshot
                                                           .data![index].id)
                                                       .update({
-                                                    "status": "accepted"
+                                                    "status": "declined"
                                                   });
+
+                                                  Navigator.pop(context);
                                                 },
                                                 child: const Text(
                                                   "Decline",
@@ -89,6 +91,7 @@ class _RequestsPageState extends State<RequestsPage> {
                                                         .update({
                                                       "status": "accepted"
                                                     });
+                                                    Navigator.pop(context);
                                                   } catch (ex) {
                                                     Fluttertoast.showToast(
                                                         msg: ex.toString());
