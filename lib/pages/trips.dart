@@ -31,9 +31,8 @@ class _TripsPageState extends State<TripsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Obx(() => Column(
+    return SingleChildScrollView(
+        child: Obx(() => Column(
               children: [
                 Container(
                   margin: EdgeInsets.only(
@@ -55,7 +54,9 @@ class _TripsPageState extends State<TripsPage> {
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Center(child: Text('No trips found'));
                       } else {
-                        return ListView.builder(
+                        return ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                const Divider(),
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount: snapshot.data!.length,
@@ -103,7 +104,7 @@ class _TripsPageState extends State<TripsPage> {
                                 subtitle: Text(
                                     "Pickup location: ${tripsList.pickUpLocation}"),
                                 trailing:
-                                    Text("Price: ${tripsList.price}per person"),
+                                    Text("Scheduled: ${tripsList.status}"),
                                 onTap: () {
                                   // Do something when the user tile is tapped
                                 },
@@ -112,9 +113,7 @@ class _TripsPageState extends State<TripsPage> {
                       }
                     })
               ],
-            ))
-      ],
-    );
+            )));
   }
 }
 
@@ -129,17 +128,17 @@ class FirebaseRealtimeDatabaseService {
             dataSnapshot.snapshot.value as Map<dynamic, dynamic>;
         values.forEach((key, value) {
           final trip = Trip(
-            driverID: value['driver_id'],
-            price: value['estimatedCost'],
-            pickUpLatPos: value['locationLatitude'],
-            pickUpLongPos: value['locationLongitude'],
-            dropOffLatPos: value['destinationLatitude'],
-            dropOffLongPos: value['destinationLongitude'],
-            tripID: value['tripID'],
-            destinationLocation: value['destinationLocation'],
-            pickUpLocation: value['pickUpLocation'],
-            passengers: value['passengers'],
-          );
+              driverID: value['driver_id'],
+              price: value['estimatedCost'],
+              pickUpLatPos: value['locationLatitude'],
+              pickUpLongPos: value['locationLongitude'],
+              dropOffLatPos: value['destinationLatitude'],
+              dropOffLongPos: value['destinationLongitude'],
+              tripID: value['tripID'],
+              destinationLocation: value['destinationLocation'],
+              pickUpLocation: value['pickUpLocation'],
+              passengers: value['passengers'],
+              status: value['status']);
           trips.add(trip);
         });
       }
